@@ -1,3 +1,5 @@
+using RedisEntegration.Business.Interfaces;
+using RedisEntegration.Business.Services;
 using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +10,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddSingleton<IRedisCacheServices, RedisCacheServices>();
 
 var redisConnection = ConnectionMultiplexer.Connect(configuration.GetConnectionString("Redis"));
 builder.Services.AddSingleton<IConnectionMultiplexer>(redisConnection);
