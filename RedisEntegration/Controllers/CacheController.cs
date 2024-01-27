@@ -22,7 +22,6 @@ namespace RedisEntegration.Controllers
         }
 
         [HttpPost("cache/set")]
-
         public async Task<IActionResult> SetData(string key, string value)
         {
             await _redisCacheServices.SetValueAsync(key, value);
@@ -30,10 +29,16 @@ namespace RedisEntegration.Controllers
         }
 
         [HttpPost("cache/delete/{key}")]
-
         public async Task<IActionResult> Delete(string key)
         {
             await _redisCacheServices.ClearAsync(key);
+            return Ok();
+        }
+
+        [HttpPost("cache/delete/all")]
+        public async Task<IActionResult> DeleteAll()
+        {
+            _redisCacheServices.ClearAll();
             return Ok();
         }
 
